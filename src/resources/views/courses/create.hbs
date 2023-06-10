@@ -1,0 +1,51 @@
+<div class="mt-4">
+  <div class="row">
+    <div class="col-lg-3">
+
+    </div>
+    <div class="col-lg-9">
+      <h1>Create new course</h1>
+      <form method="POST" action="/courses/lib">
+        <div class="mb-3">
+          <label for="name" class="form-label">Course name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            placeholder="Course name"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="videoId" class="form-label">Video ID</label>
+          <input
+            type="text"
+            class="form-control"
+            id="videoId"
+            name="videoId"
+            placeholder="Video ID"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="desc" class="form-label">Description</label>
+          <textarea
+            class="form-control"
+            id="desc"
+            name="desc"
+            placeholder="Description"
+          ></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="level" class="form-label">level</label>
+          <textarea
+            class="form-control"
+            id="level"
+            name="level"
+            placeholder="level"
+          ></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
