@@ -6,9 +6,23 @@ const {
 
 class MeController {
   // [GET] /search
-  storedCourse(req, res) {
-    // TODO: Create me/stored-Course.hbs
-    res.send("search");
+  storedCourse(req, res, next) {
+    Course.find({})
+      .then((courses) => {
+        res.render("me/stored-Course", {
+          courses: multiplesMongooseToObject(courses),
+        });
+      })
+      .catch(next);
+  }
+  trashCourse(req, res, next) {
+    Course.findDeleted({})
+      .then((courses) => {
+        res.render("me/trash-Course", {
+          courses: multiplesMongooseToObject(courses),
+        });
+      })
+      .catch(next);
   }
 }
 
