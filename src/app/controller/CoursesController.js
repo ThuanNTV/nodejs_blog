@@ -3,7 +3,6 @@ const {
   multiplesMongooseToObject,
   mongooseToObject,
 } = require("../../util/mongoose");
-const course = require("../models/course");
 
 class CoursesController {
   // [GET] /
@@ -27,12 +26,11 @@ class CoursesController {
   // [POST]
   lib(req, res, next) {
     // res.json(req.body);
-    const formData = req.body;
-    formData.image = `https://i.ytimg.com/vi/${req.body.videoId}/hq720.jpg`;
-    const course = new Course(formData);
+    req.body.image = `https://i.ytimg.com/vi/${req.body.videoId}/hq720.jpg`;
+    const course = new Course(req.body);
     course
       .save()
-      .then(() => res.redirect("/"))
+      .then(() => res.redirect("/me/stored/courses"))
       .catch((error) => {});
   }
 
@@ -59,10 +57,29 @@ class CoursesController {
       .catch(next);
   }
 
+  // /courses/64883f545dcb45dc24383c98/restore TODO:restore not working
   restore(req, res, next) {
     Course.restore({ _id: req.params.id })
       .then(() => res.redirect("back"))
       .catch(next);
+  }
+
+  forceDelete(req, res, next) {
+    Course.deleteOne({ _id: req.params.id })
+      .then(() => res.redirect("back"))
+      .catch(next);
+  }
+
+  handleFormActions(req, res, next) {
+    switch (req.body.action) {
+      case "delete":
+        Course.delete({ _id: { $in: req.body.courseIds } })
+          .then(() => res.redirect("back"))
+          .catch(next);
+        break;
+      default:
+        res.json({ message: "Action is invalid" });
+    }
   }
 }
 

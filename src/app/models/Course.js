@@ -6,12 +6,13 @@ const Schema = mongoose.Schema;
 
 const Course = new Schema(
   {
-    name: { type: String, maxLength: 255, require: true },
-    desc: { type: String, maxLength: 600 },
-    image: { type: String, maxLength: 255 },
-    videoId: { type: String, maxLength: 255, require: true },
-    level: { type: String, maxLength: 255 },
+    name: { type: String, require: true },
+    desc: { type: String },
+    image: { type: String },
+    videoId: { type: String, require: true },
+    level: { type: String },
     slug: { type: String, slug: "name", unique: true },
+    deleted: { type: Boolean, default: false },
   },
   {
     timestamps: true,
