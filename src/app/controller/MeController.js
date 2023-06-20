@@ -7,13 +7,21 @@ const {
 class MeController {
   // [GET] /search
   storedCourse(req, res, next) {
-    Course.find({})
-      .then((courses) => {
+    let coursesQuery = Course.find({});
+
+    // if (req.query.hasOwnProperty("_sort")) {
+    //   coursesQuery = coursesQuery.sort({
+    //     [req.query.column]: req.query.type,
+    //   });
+    // }
+
+    Promise.all([coursesQuery, Course.countDocumentsDeleted()]).then(
+      ([courses, deletedCount]) =>
         res.render("me/stored-Course", {
+          deletedCount,
           courses: multiplesMongooseToObject(courses),
-        });
-      })
-      .catch(next);
+        })
+    );
   }
   trashCourse(req, res, next) {
     Course.findDeleted({})
